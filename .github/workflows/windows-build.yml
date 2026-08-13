@@ -21,6 +21,33 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npx tauri build --bundles nsis
+      - name: Smoke-test the generated installer
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $installer = Get-ChildItem "src-tauri/target/release/bundle/nsis/*.exe" | Select-Object -First 1
+          if ($null -eq $installer) {
+            throw "The NSIS installer was not generated."
+          }
+
+          $installProcess = Start-Process -FilePath $installer.FullName -ArgumentList "/S" -Wait -PassThru
+          if ($installProcess.ExitCode -ne 0) {
+            throw "The NSIS installer exited with code $($installProcess.ExitCode)."
+          }
+
+          $installedApp = Get-ChildItem $env:LOCALAPPDATA -Recurse -File -Filter "*.exe" -ErrorAction SilentlyContinue |
+            Where-Object { $_.Name -in @("nyangnyang-native.exe", "냥냥.exe") } |
+            Select-Object -First 1
+          if ($null -eq $installedApp) {
+            throw "The installed application executable was not found."
+          }
+
+          $appProcess = Start-Process -FilePath $installedApp.FullName -PassThru
+          Start-Sleep -Seconds 8
+          if ($appProcess.HasExited) {
+            throw "The installed application exited during its launch smoke test with code $($appProcess.ExitCode)."
+          }
+          Stop-Process -Id $appProcess.Id -Force
       - uses: actions/upload-artifact@v7
         with:
           name: nyangnyang-windows-installer
