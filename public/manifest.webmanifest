@@ -1,0 +1,18 @@
+{
+  "name": "냥냥",
+  "short_name": "냥냥",
+  "description": "그냥 마비노기 모바일 작곡 mml 고양이 건반 어쩌구...",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#f7f2e8",
+  "theme_color": "#ef6b5a",
+  "icons": [
+    {
+      "src": "/assets/themes/default/pawpad.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

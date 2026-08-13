@@ -1,0 +1,59 @@
+{
+  "name": "nyangnyang-native",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "prepare:fonts": "node scripts/prepare-fonts.mjs",
+    "predev": "npm run prepare:fonts",
+    "dev": "vite",
+    "prebuild": "npm run prepare:fonts",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "test:core": "node --test tests/mml-core.test.mjs",
+    "test:native": "node --test tests/native-shell.test.mjs",
+    "test": "npm run build && npm run test:core && npm run test:native",
+    "tauri": "tauri",
+    "native:dev": "tauri dev",
+    "native:build": "tauri build",
+    "macos:build": "tauri build --bundles app",
+    "android:init": "node scripts/tauri-mobile.mjs android init",
+    "android:dev": "node scripts/tauri-mobile.mjs android dev",
+    "android:build": "node scripts/tauri-mobile.mjs android build",
+    "android:build:arm64": "node scripts/tauri-mobile.mjs android build --target aarch64 --apk --ci",
+    "ios:init": "node scripts/tauri-mobile.mjs ios init",
+    "ios:dev": "node scripts/tauri-mobile.mjs ios dev",
+    "ios:build": "node scripts/tauri-mobile.mjs ios build",
+    "ios:build:simulator": "node scripts/tauri-mobile.mjs ios build --debug --target aarch64-sim --ci --no-sign"
+  },
+  "dependencies": {
+    "@fontsource/iansui": "^5.3.0",
+    "@fontsource/yomogi": "^5.3.0",
+    "@tauri-apps/api": "^2.11.1",
+    "@tauri-apps/plugin-clipboard-manager": "^2.3.2",
+    "@tauri-apps/plugin-dialog": "^2.7.2",
+    "@tauri-apps/plugin-fs": "^2.5.1",
+    "@tauri-apps/plugin-opener": "^2.5.4",
+    "fflate": "^0.8.2",
+    "lucide-react": "^1.28.0",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
+    "spessasynth_core": "^4.3.16",
+    "spessasynth_lib": "^4.3.12"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.2.1",
+    "@tauri-apps/cli": "^2.11.4",
+    "@types/node": "22.19.19",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.5",
+    "tailwindcss": "4.2.1",
+    "typescript": "5.9.3",
+    "vite": "8.2.1"
+  }
+}
