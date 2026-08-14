@@ -5675,6 +5675,34 @@ summary:focus-visible {
   }
 }
 
+/* Landscape tablet and embedded widths need a compact header as well as a
+   fluid outer stage. Without this bridge the desktop header stays wider than
+   the stage and its right-hand controls are clipped by stage overflow. */
+@media (min-width: 701px) and (max-width: 1079px) and (orientation: landscape) {
+  .app-viewport:not(.mml-open) .top-bar {
+    --octave-label-height: 16px;
+    --octave-row-gap: 2px;
+    --top-control-height: 48px;
+    grid-template-columns:
+      clamp(112px, 14vw, 150px)
+      minmax(230px, 1fr)
+      clamp(176px, 24vw, 240px)
+      48px;
+    gap: clamp(5px, 0.75vw, 8px);
+    padding: 6px clamp(8px, 1vw, 12px);
+  }
+
+  .app-viewport:not(.mml-open) .transpose-panel {
+    grid-template-columns: 48px minmax(72px, 1fr) 48px;
+    gap: 5px;
+  }
+
+  .app-viewport:not(.mml-open) .header-actions {
+    min-height: var(--top-control-height);
+    height: var(--top-control-height);
+  }
+}
+
 @media (min-width: 601px) and (max-width: 700px) and (orientation: landscape) {
   .app-viewport:not(.mml-open) .top-bar {
     --octave-label-height: 14px;
